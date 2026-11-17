@@ -1,0 +1,517 @@
+<title>Have a Nice Day — Hanse 575</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one calm column on a Baltic-fog ground; the yacht's name, spelled in signal flags, is the single bold moment. */
+:root {
+  --bg: #eef2f4;
+  --surface: #f8fafb;
+  --ink: #0e2a3b;
+  --muted: #536a77;
+  --line: #c9d5dc;
+  --sea: #1f4e79;
+  --accent: #c8102e;
+  --hatch: #dbe4e9;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1820; --surface: #102330; --ink: #e4edf2; --muted: #8fa6b2;
+    --line: #23394a; --sea: #7fb2dc; --accent: #ff5466; --hatch: #16303f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b1820; --surface: #102330; --ink: #e4edf2; --muted: #8fa6b2;
+  --line: #23394a; --sea: #7fb2dc; --accent: #ff5466; --hatch: #16303f;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--sea); outline-offset: 3px; }
+
+/* Top bar */
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg);
+}
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.bar .wrap {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding-block: 10px;
+}
+.mark {
+  font-family: var(--font-display); font-weight: 700; font-stretch: 112%;
+  letter-spacing: .08em; text-transform: uppercase; font-size: 13px;
+  white-space: nowrap;
+}
+.nav { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; align-items: center; }
+.nav-link {
+  background: none; border: 0; padding: 6px 8px; cursor: pointer;
+  font-size: 14px; color: var(--muted); border-radius: 4px;
+}
+.nav-link:hover { color: var(--ink); }
+.langs {
+  display: inline-flex; border: 1px solid var(--line); border-radius: 6px;
+  overflow: hidden; margin-left: 8px;
+}
+.langs button {
+  background: none; border: 0; padding: 5px 10px; cursor: pointer;
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em;
+  color: var(--muted);
+}
+.langs button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+@media (max-width: 720px) { .nav-link { display: none; } }
+
+/* Draft notice */
+.draft {
+  font-family: var(--font-mono); font-size: 12.5px; color: var(--muted);
+  border-bottom: 1px dashed var(--line);
+}
+.draft .wrap { padding-block: 8px; display: flex; gap: 10px; align-items: baseline; }
+.draft b { color: var(--accent); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; }
+
+/* Hero */
+.hero .wrap { padding-block: 56px 40px; display: grid; gap: 28px; }
+.eyebrow {
+  font-family: var(--font-mono); font-size: 13px; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--sea);
+}
+.name {
+  font-weight: 800; font-stretch: 125%; text-transform: uppercase;
+  font-size: clamp(40px, 9vw, 104px); line-height: .92; letter-spacing: -.01em;
+}
+.flags { display: grid; gap: 10px; }
+.flagrow { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.word { display: flex; gap: 4px; }
+.flag { width: clamp(28px, 5vw, 46px); height: auto; display: block; }
+.flag-cap { font-size: 13px; color: var(--muted); }
+.lede { font-size: clamp(18px, 2.2vw, 22px); line-height: 1.5; max-width: 40ch; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn {
+  border-radius: 6px; padding: 12px 18px; cursor: pointer; font-weight: 600;
+  border: 1px solid var(--ink); background: var(--ink); color: var(--bg);
+}
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn:hover { opacity: .88; }
+
+/* Hero photo placeholder */
+.ph {
+  position: relative; border: 1px solid var(--line); border-radius: 4px;
+  background: repeating-linear-gradient(135deg, var(--hatch) 0 2px, transparent 2px 12px), var(--surface);
+  display: flex; align-items: flex-end; min-width: 0;
+}
+.ph span {
+  font-family: var(--font-mono); font-size: 12px; color: var(--muted);
+  background: var(--surface); padding: 4px 8px; margin: 10px;
+  border: 1px solid var(--line); border-radius: 3px;
+}
+.ph.hero-ph { aspect-ratio: 21 / 9; max-width: 100%; }
+
+/* Figures */
+.figs .wrap { padding-block: 8px 48px; }
+.figgrid {
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line);
+}
+.fig { padding: 16px 12px 16px 0; display: grid; gap: 2px; min-width: 0; }
+.fig + .fig { padding-left: 16px; border-left: 1px solid var(--line); }
+.fig .v {
+  font-family: var(--font-display); font-weight: 700; font-stretch: 100%;
+  font-size: clamp(22px, 3vw, 32px); font-variant-numeric: tabular-nums; line-height: 1.1;
+}
+.fig .l { font-size: 13px; color: var(--muted); }
+.note { font-size: 13px; color: var(--muted); margin-top: 10px; }
+@media (max-width: 720px) {
+  .figgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fig, .fig + .fig { padding: 14px 12px 14px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+  .fig:nth-child(even) { padding-left: 16px; border-left: 1px solid var(--line); }
+  .fig:last-child { grid-column: 1 / -1; border-bottom: 0; }
+}
+
+/* Sections */
+section.block { scroll-margin-top: 56px; }
+section.block .wrap { padding-block: 48px; border-top: 1px solid var(--line); }
+.sec-head { display: grid; gap: 8px; margin-bottom: 28px; }
+.sec-head h2 {
+  font-weight: 700; font-stretch: 110%; font-size: clamp(26px, 3.4vw, 36px);
+  text-transform: uppercase; letter-spacing: .01em;
+}
+.sec-head p { color: var(--muted); max-width: 62ch; }
+
+.why { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 48px; }
+.why article { display: grid; gap: 8px; min-width: 0; }
+.why h3 { font-size: 20px; font-weight: 700; font-stretch: 100%; }
+.why p { color: var(--muted); max-width: 52ch; }
+@media (max-width: 720px) { .why { grid-template-columns: 1fr; } }
+
+.gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.gallery .ph { aspect-ratio: 4 / 3; }
+.gallery .ph.wide { grid-column: span 2; aspect-ratio: auto; }
+@media (max-width: 720px) {
+  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gallery .ph.wide { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+}
+
+.specs { width: 100%; border-collapse: collapse; font-size: 15px; }
+.specs-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; }
+.specs th, .specs td { padding: 10px 0; border-bottom: 1px solid var(--line); text-align: left; vertical-align: baseline; }
+.specs th { font-weight: 400; color: var(--muted); padding-right: 16px; }
+.specs td { font-family: var(--font-mono); font-size: 14px; text-align: right; font-variant-numeric: tabular-nums; }
+.tbc { color: var(--accent); }
+@media (max-width: 720px) { .specs-cols { grid-template-columns: 1fr; } }
+
+.equip { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; }
+.equip li {
+  display: flex; justify-content: space-between; gap: 16px; align-items: baseline;
+  padding: 12px 0; border-bottom: 1px solid var(--line); min-width: 0;
+}
+.equip .tbd { font-family: var(--font-mono); font-size: 12px; color: var(--muted); white-space: nowrap; }
+@media (max-width: 720px) { .equip { grid-template-columns: 1fr; } }
+
+.where { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+.coords { font-family: var(--font-mono); font-size: 14px; color: var(--sea); margin-top: 12px; }
+@media (max-width: 720px) { .where { grid-template-columns: 1fr; } }
+
+.contact {
+  background: var(--ink); color: var(--bg); border-radius: 6px;
+  padding: 32px; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px;
+}
+.contact h2 { font-weight: 700; font-stretch: 110%; text-transform: uppercase; font-size: clamp(26px, 3.4vw, 36px); }
+.contact p { opacity: .8; margin-top: 8px; }
+.contact .card { border: 1px dashed color-mix(in srgb, var(--bg) 45%, transparent); border-radius: 4px; padding: 16px; display: grid; gap: 4px; align-content: start; }
+.contact .k { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; opacity: .7; }
+.contact .price { font-family: var(--font-display); font-weight: 700; font-size: 24px; margin-bottom: 12px; }
+@media (max-width: 720px) { .contact { grid-template-columns: 1fr; padding: 24px; } }
+
+footer .wrap { padding-block: 32px 48px; font-size: 13px; color: var(--muted); }
+footer p { max-width: 70ch; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .flag { animation: hoist .5s ease-out both; }
+  .word:nth-child(2) .flag { animation-delay: .15s; }
+  .word:nth-child(3) .flag { animation-delay: .3s; }
+  .word:nth-child(4) .flag { animation-delay: .45s; }
+  @keyframes hoist { from { transform: translateY(6px); } to { transform: none; } }
+}
+</style>
+
+<!-- Signal flag symbols (International Code of Signals) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="fc"><rect width="30" height="20"/></clipPath>
+    <symbol id="f-H" viewBox="0 0 30 20"><rect width="15" height="20" fill="#ffffff"/><rect x="15" width="15" height="20" fill="#d71920"/><rect x=".5" y=".5" width="29" height="19" fill="none" stroke="#7d8f99" stroke-width="1"/></symbol>
+    <symbol id="f-A" viewBox="0 0 30 20"><path d="M0 0H15V20H0Z" fill="#ffffff"/><path d="M15 0H30L22 10L30 20H15Z" fill="#1d4e9e"/><path d="M.5 .5H29L21.4 10L29 19.5H.5Z" fill="none" stroke="#7d8f99" stroke-width="1"/></symbol>
+    <symbol id="f-V" viewBox="0 0 30 20"><rect width="30" height="20" fill="#ffffff"/><g clip-path="url(#fc)"><path d="M0 0L30 20M30 0L0 20" stroke="#d71920" stroke-width="4.5"/></g><rect x=".5" y=".5" width="29" height="19" fill="none" stroke="#7d8f99" stroke-width="1"/></symbol>
+    <symbol id="f-E" viewBox="0 0 30 20"><rect width="30" height="10" fill="#1d4e9e"/><rect y="10" width="30" height="10" fill="#d71920"/></symbol>
+    <symbol id="f-N" viewBox="0 0 30 20"><rect width="30" height="20" fill="#ffffff"/><g fill="#1d4e9e"><rect width="7.5" height="5"/><rect x="15" width="7.5" height="5"/><rect x="7.5" y="5" width="7.5" height="5"/><rect x="22.5" y="5" width="7.5" height="5"/><rect y="10" width="7.5" height="5"/><rect x="15" y="10" width="7.5" height="5"/><rect x="7.5" y="15" width="7.5" height="5"/><rect x="22.5" y="15" width="7.5" height="5"/></g><rect x=".5" y=".5" width="29" height="19" fill="none" stroke="#7d8f99" stroke-width="1"/></symbol>
+    <symbol id="f-I" viewBox="0 0 30 20"><rect width="30" height="20" fill="#f6c700"/><circle cx="15" cy="10" r="5" fill="#111111"/></symbol>
+    <symbol id="f-C" viewBox="0 0 30 20"><rect width="30" height="20" fill="#ffffff"/><rect width="30" height="4" fill="#1d4e9e"/><rect y="8" width="30" height="4" fill="#d71920"/><rect y="16" width="30" height="4" fill="#1d4e9e"/></symbol>
+    <symbol id="f-D" viewBox="0 0 30 20"><rect width="30" height="20" fill="#f6c700"/><rect y="5" width="30" height="10" fill="#1d4e9e"/></symbol>
+    <symbol id="f-Y" viewBox="0 0 30 20"><rect width="30" height="20" fill="#f6c700"/><g clip-path="url(#fc)" stroke="#d71920" stroke-width="3.6"><path d="M-20 20L0 0M-12 20L8 0M-4 20L16 0M4 20L24 0M12 20L32 0M20 20L40 0M28 20L48 0"/></g></symbol>
+  </defs>
+</svg>
+
+<header class="bar">
+  <div class="wrap">
+    <span class="mark">Have a Nice Day</span>
+    <nav class="nav" aria-label="Sections">
+      <button class="nav-link" data-go="why" data-i18n="nav_why">Highlights</button>
+      <button class="nav-link" data-go="gallery" data-i18n="nav_gallery">On board</button>
+      <button class="nav-link" data-go="specs" data-i18n="nav_specs">Specification</button>
+      <button class="nav-link" data-go="contact" data-i18n="nav_contact">Contact</button>
+      <span class="langs" role="group" aria-label="Language">
+        <button id="lang-en" data-lang="en" aria-pressed="true">EN</button>
+        <button id="lang-de" data-lang="de" aria-pressed="false">DE</button>
+        <button id="lang-pl" data-lang="pl" aria-pressed="false">PL</button>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<div class="draft"><div class="wrap"><b data-i18n="draft_tag">Draft</b><span data-i18n="draft">Specifications and photos will be added by the owner.</span></div></div>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow" data-i18n="eyebrow">Hanse 575 · Built 2014 · Lying Gdańsk, Poland</p>
+      <h1 class="name">Have a<br>Nice Day</h1>
+      <div class="flags">
+        <div class="flagrow" role="img" aria-label="HAVE A NICE DAY in signal flags">
+          <span class="word"><svg class="flag" viewBox="0 0 30 20"><use href="#f-H"/></svg><svg class="flag" viewBox="0 0 30 20"><use href="#f-A"/></svg><svg class="flag" viewBox="0 0 30 20"><use href="#f-V"/></svg><svg class="flag" viewBox="0 0 30 20"><use href="#f-E"/></svg></span>
+          <span class="word"><svg class="flag" viewBox="0 0 30 20"><use href="#f-A"/></svg></span>
+          <span class="word"><svg class="flag" viewBox="0 0 30 20"><use href="#f-N"/></svg><svg class="flag" viewBox="0 0 30 20"><use href="#f-I"/></svg><svg class="flag" viewBox="0 0 30 20"><use href="#f-C"/></svg><svg class="flag" viewBox="0 0 30 20"><use href="#f-E"/></svg></span>
+          <span class="word"><svg class="flag" viewBox="0 0 30 20"><use href="#f-D"/></svg><svg class="flag" viewBox="0 0 30 20"><use href="#f-A"/></svg><svg class="flag" viewBox="0 0 30 20"><use href="#f-Y"/></svg></span>
+        </div>      </div>
+      <p class="lede" data-i18n="lede">A 57-foot German bluewater cruiser designed by Judel/Vrolijk. Two people can sail her, and a family can live aboard.</p>
+      <div class="ctas">
+        <button class="btn" data-go="contact" data-i18n="cta1">Request full specification</button>
+        <button class="btn ghost" data-go="specs" data-i18n="cta2">See the specification</button>
+      </div>
+      <div class="ph hero-ph"><span data-i18n="ph_hero">Photo: under sail, full side profile</span></div>
+    </div>
+  </section>
+
+  <section class="figs" aria-label="Key figures">
+    <div class="wrap">
+      <div class="figgrid">
+        <div class="fig"><span class="v">17.15 m</span><span class="l" data-i18n="f_loa">Length overall</span></div>
+        <div class="fig"><span class="v">5.20 m</span><span class="l" data-i18n="f_beam">Beam</span></div>
+        <div class="fig"><span class="v">3</span><span class="l" data-i18n="f_cabins">Cabins</span></div>
+        <div class="fig"><span class="v">≈ 19.5 t</span><span class="l" data-i18n="f_disp">Displacement</span></div>
+        <div class="fig"><span class="v">D3-150</span><span class="l" data-i18n="f_engine">Volvo Penta engine</span></div>
+      </div>
+      <p class="note" data-i18n="f_note">Model data from published Hanse 575 specifications. The owner will confirm the final figures.</p>
+    </div>
+  </section>
+
+  <section class="block" id="why">
+    <div class="wrap">
+      <div class="sec-head"><h2 data-i18n="h_why">Why this yacht</h2></div>
+      <div class="why">
+        <article><h3 data-i18n="w1t">Drawn by Judel/Vrolijk</h3><p data-i18n="w1d">The German studio known for America's Cup and grand-prix racing yachts gave the 575 a clean hull without chines and a balanced helm.</p></article>
+        <article><h3 data-i18n="w2t">Built in Germany for open water</h3><p data-i18n="w2d">Laminated at the Hanse yard in Greifswald and built to Germanischer Lloyd ocean-going standards.</p></article>
+        <article><h3 data-i18n="w3t">Sailed by two</h3><p data-i18n="w3d">A self-tacking jib and electric winches mean tacking needs no extra crew, even on a 17-metre yacht.</p></article>
+        <article><h3 data-i18n="w4t">A home on the water</h3><p data-i18n="w4d">A wide cockpit, a bathing platform with a tender garage, and about 2.10 m of headroom in a bright saloon.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="gallery">
+    <div class="wrap">
+      <div class="sec-head"><h2 data-i18n="h_gallery">On board</h2><p data-i18n="gallery_note">The owner will add photos here.</p></div>
+      <div class="gallery">
+        <div class="ph wide"><span data-i18n="g1">Cockpit</span></div>
+        <div class="ph"><span data-i18n="g2">Saloon</span></div>
+        <div class="ph"><span data-i18n="g3">Galley</span></div>
+        <div class="ph"><span data-i18n="g4">Owner's cabin</span></div>
+        <div class="ph"><span data-i18n="g5">From the air</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="specs">
+    <div class="wrap">
+      <div class="sec-head"><h2 data-i18n="h_specs">Specification</h2><p data-i18n="specs_note">Values are standard Hanse 575 figures. Items marked <span class="tbc">●</span> will be confirmed for this yacht.</p></div>
+      <div class="specs-cols">
+        <table class="specs">
+          <tr><th data-i18n="s_builder">Builder</th><td>Hanse Yachts, Greifswald</td></tr>
+          <tr><th data-i18n="s_designer">Naval architect</th><td>Judel/Vrolijk &amp; Co</td></tr>
+          <tr><th data-i18n="s_year">Year built</th><td>2014 <span class="tbc">●</span></td></tr>
+          <tr><th data-i18n="s_loa">Length overall</th><td>17.15 m</td></tr>
+          <tr><th data-i18n="s_lwl">Waterline length</th><td>15.15 m</td></tr>
+          <tr><th data-i18n="s_beam">Beam</th><td>5.20 m</td></tr>
+          <tr><th data-i18n="s_draft">Draft</th><td>2.85 m <span class="tbc">●</span></td></tr>
+          <tr><th data-i18n="s_disp">Displacement</th><td>≈ 19.5 t</td></tr>
+        </table>
+        <table class="specs">
+          <tr><th data-i18n="s_sail">Sail area</th><td>≈ 160 m²</td></tr>
+          <tr><th data-i18n="s_air">Air draft</th><td>≈ 25.5 m</td></tr>
+          <tr><th data-i18n="s_engine">Engine</th><td>Volvo Penta D3-150 <span class="tbc">●</span></td></tr>
+          <tr><th data-i18n="s_hours">Engine hours</th><td><span class="tbc">●</span></td></tr>
+          <tr><th data-i18n="s_water">Fresh water</th><td>≈ 810 l</td></tr>
+          <tr><th data-i18n="s_fuel">Fuel</th><td>≈ 520 l</td></tr>
+          <tr><th data-i18n="s_cabins">Cabins / heads</th><td>3 / <span class="tbc">●</span></td></tr>
+          <tr><th data-i18n="s_flag">Flag and VAT status</th><td><span class="tbc">●</span></td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="equipment">
+    <div class="wrap">
+      <div class="sec-head"><h2 data-i18n="h_equip">Equipment and recent work</h2><p data-i18n="equip_note">The owner will list the inventory and service history here.</p></div>
+      <ul class="equip">
+        <li><span data-i18n="e1">Sails and rigging</span><span class="tbd" data-i18n="tbd">to follow</span></li>
+        <li><span data-i18n="e2">Navigation and electronics</span><span class="tbd" data-i18n="tbd">to follow</span></li>
+        <li><span data-i18n="e3">Power: batteries, solar, generator</span><span class="tbd" data-i18n="tbd">to follow</span></li>
+        <li><span data-i18n="e4">Comfort: heating, air conditioning, watermaker</span><span class="tbd" data-i18n="tbd">to follow</span></li>
+        <li><span data-i18n="e5">Tender and outboard</span><span class="tbd" data-i18n="tbd">to follow</span></li>
+        <li><span data-i18n="e6">Service history and survey</span><span class="tbd" data-i18n="tbd">to follow</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="where">
+    <div class="wrap">
+      <div class="where">
+        <div>
+          <div class="sec-head" style="margin-bottom:12px"><h2 data-i18n="h_where">Where she lies</h2></div>
+          <p data-i18n="where_d">Gdańsk, Poland, on the Baltic. Viewings and sea trials by appointment.</p>
+          <p class="coords">54°21′ N · 18°39′ E</p>
+        </div>
+        <div class="ph" style="aspect-ratio:4/3;max-width:100%"><span data-i18n="ph_marina">Photo: in her berth</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="contact">
+    <div class="wrap">
+      <div class="contact">
+        <div>
+          <h2 data-i18n="h_contact">Contact</h2>
+          <p data-i18n="contact_d">Contact details will be added before this page is shared.</p>
+        </div>
+        <div class="card">
+          <span class="k" data-i18n="price_k">Price</span>
+          <span class="price" data-i18n="price_v">On request</span>
+          <span class="k" data-i18n="contact_k">Owner's representative</span>
+          <span data-i18n="contact_v">Name · phone · email</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p data-i18n="footer">Draft prepared November 2026. Model figures come from published Hanse 575 data and reviews. The owner will supply the final specification.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var T = {
+    de: {
+      nav_why: "Merkmale", nav_gallery: "An Bord", nav_specs: "Technische Daten", nav_contact: "Kontakt",
+      draft_tag: "Entwurf", draft: "Technische Daten und Fotos ergänzt der Eigner.",
+      eyebrow: "Hanse 575 · Baujahr 2014 · Liegeplatz Danzig, Polen",
+      lede: "Ein 57-Fuß-Blauwasserkreuzer aus Deutschland, gezeichnet von Judel/Vrolijk. Zu zweit segelbar, mit Platz für eine ganze Familie an Bord.",
+      cta1: "Vollständige Unterlagen anfordern", cta2: "Technische Daten ansehen",
+      ph_hero: "Foto: unter Segeln, Seitenansicht",
+      f_loa: "Länge über alles", f_beam: "Breite", f_cabins: "Kabinen", f_disp: "Verdrängung", f_engine: "Volvo-Penta-Motor",
+      f_note: "Modelldaten aus veröffentlichten Hanse-575-Angaben. Die endgültigen Werte bestätigt der Eigner.",
+      h_why: "Warum diese Yacht",
+      w1t: "Gezeichnet von Judel/Vrolijk",
+      w1d: "Das deutsche Konstruktionsbüro, bekannt für America's-Cup- und Grand-Prix-Rennyachten, gab der 575 einen glatten Rumpf ohne Kimmkanten und ein ausgewogenes Ruder.",
+      w2t: "In Deutschland gebaut für offenes Wasser",
+      w2d: "Laminiert auf der Hanse-Werft in Greifswald und gebaut nach den Hochseestandards des Germanischen Lloyd.",
+      w3t: "Zu zweit segelbar",
+      w3d: "Selbstwendefock und elektrische Winschen: Wenden ohne zusätzliche Crew, auch auf 17 Metern.",
+      w4t: "Ein Zuhause auf dem Wasser",
+      w4d: "Großes Cockpit, Badeplattform mit Beibootgarage und rund 2,10 m Stehhöhe im hellen Salon.",
+      h_gallery: "An Bord", gallery_note: "Hier ergänzt der Eigner die Fotos.",
+      g1: "Cockpit", g2: "Salon", g3: "Pantry", g4: "Eignerkabine", g5: "Aus der Luft",
+      h_specs: "Technische Daten",
+      specs_note: "Die Werte sind Standardangaben der Hanse 575. Mit <span class=\"tbc\">●</span> markierte Punkte werden für diese Yacht noch bestätigt.",
+      s_builder: "Werft", s_designer: "Konstrukteur", s_year: "Baujahr", s_loa: "Länge über alles", s_lwl: "Wasserlinienlänge",
+      s_beam: "Breite", s_draft: "Tiefgang", s_disp: "Verdrängung", s_sail: "Segelfläche", s_air: "Masthöhe über Wasser",
+      s_engine: "Motor", s_hours: "Motorstunden", s_water: "Frischwasser", s_fuel: "Kraftstoff",
+      s_cabins: "Kabinen / Nasszellen", s_flag: "Flagge und MwSt.-Status",
+      h_equip: "Ausrüstung und letzte Arbeiten", equip_note: "Hier listet der Eigner Inventar und Wartungshistorie auf.",
+      e1: "Segel und Rigg", e2: "Navigation und Elektronik", e3: "Energie: Batterien, Solar, Generator",
+      e4: "Komfort: Heizung, Klimaanlage, Wassermacher", e5: "Beiboot und Außenborder", e6: "Wartungshistorie und Gutachten",
+      tbd: "folgt",
+      h_where: "Liegeplatz", where_d: "Danzig, Polen, an der Ostsee. Besichtigung und Probefahrt nach Vereinbarung.",
+      ph_marina: "Foto: am Liegeplatz",
+      h_contact: "Kontakt", contact_d: "Die Kontaktdaten werden ergänzt, bevor die Seite geteilt wird.",
+      price_k: "Preis", price_v: "Auf Anfrage", contact_k: "Vertreter des Eigners", contact_v: "Name · Telefon · E-Mail",
+      footer: "Entwurf vom November 2026. Die Modelldaten stammen aus veröffentlichten Hanse-575-Angaben und Testberichten. Die endgültigen Daten liefert der Eigner."
+    },
+    pl: {
+      nav_why: "Atuty", nav_gallery: "Na pokładzie", nav_specs: "Dane techniczne", nav_contact: "Kontakt",
+      draft_tag: "Wersja robocza", draft: "Dane techniczne i zdjęcia uzupełni armator.",
+      eyebrow: "Hanse 575 · Rocznik 2014 · Port: Gdańsk, Polska",
+      lede: "57-stopowy niemiecki jacht oceaniczny projektu Judel/Vrolijk. Poprowadzą go dwie osoby, a cała rodzina może na nim zamieszkać.",
+      cta1: "Poproś o pełną specyfikację", cta2: "Zobacz dane techniczne",
+      ph_hero: "Zdjęcie: pod żaglami, z boku",
+      f_loa: "Długość całkowita", f_beam: "Szerokość", f_cabins: "Kabiny", f_disp: "Wyporność", f_engine: "Silnik Volvo Penta",
+      f_note: "Dane modelu z opublikowanych specyfikacji Hanse 575. Ostateczne wartości potwierdzi armator.",
+      h_why: "Dlaczego ten jacht",
+      w1t: "Projekt Judel/Vrolijk",
+      w1d: "Niemieckie biuro znane z jachtów Pucharu Ameryki i regatowych konstrukcji grand prix nadało 575 gładki kadłub bez krawędzi i dobrze wyważony ster.",
+      w2t: "Zbudowany w Niemczech na otwarte morze",
+      w2d: "Laminowany w stoczni Hanse w Greifswaldzie, zgodnie z oceanicznymi normami Germanischer Lloyd.",
+      w3t: "Na dwie osoby",
+      w3d: "Samohalsujący fok i elektryczne kabestany: zwrot bez dodatkowej załogi, nawet na 17 metrach.",
+      w4t: "Dom na wodzie",
+      w4d: "Szeroki kokpit, platforma kąpielowa z garażem na ponton i ok. 2,10 m wysokości w jasnym salonie.",
+      h_gallery: "Na pokładzie", gallery_note: "Tutaj armator doda zdjęcia.",
+      g1: "Kokpit", g2: "Salon", g3: "Kambuz", g4: "Kabina armatorska", g5: "Z lotu ptaka",
+      h_specs: "Dane techniczne",
+      specs_note: "Wartości to standardowe dane Hanse 575. Pozycje oznaczone <span class=\"tbc\">●</span> zostaną potwierdzone dla tego jachtu.",
+      s_builder: "Stocznia", s_designer: "Projektant", s_year: "Rok budowy", s_loa: "Długość całkowita", s_lwl: "Długość linii wodnej",
+      s_beam: "Szerokość", s_draft: "Zanurzenie", s_disp: "Wyporność", s_sail: "Powierzchnia żagli", s_air: "Wysokość masztu nad wodą",
+      s_engine: "Silnik", s_hours: "Motogodziny", s_water: "Woda słodka", s_fuel: "Paliwo",
+      s_cabins: "Kabiny / łazienki", s_flag: "Bandera i status VAT",
+      h_equip: "Wyposażenie i ostatnie prace", equip_note: "Tutaj armator wypisze wyposażenie i historię serwisową.",
+      e1: "Żagle i olinowanie", e2: "Nawigacja i elektronika", e3: "Energia: akumulatory, panele słoneczne, generator",
+      e4: "Komfort: ogrzewanie, klimatyzacja, odsalarka", e5: "Ponton i silnik zaburtowy", e6: "Historia serwisowa i ekspertyza",
+      tbd: "wkrótce",
+      h_where: "Gdzie stoi", where_d: "Gdańsk, Polska, nad Bałtykiem. Oględziny i rejs próbny po wcześniejszym umówieniu.",
+      ph_marina: "Zdjęcie: przy kei",
+      h_contact: "Kontakt", contact_d: "Dane kontaktowe zostaną dodane przed udostępnieniem strony.",
+      price_k: "Cena", price_v: "Na zapytanie", contact_k: "Przedstawiciel armatora", contact_v: "Imię i nazwisko · telefon · e-mail",
+      footer: "Wersja robocza z listopada 2026. Dane modelu pochodzą z opublikowanych specyfikacji i testów Hanse 575. Ostateczną specyfikację przekaże armator."
+    }
+  };
+  var nodes = document.querySelectorAll("[data-i18n]");
+  var en = {};
+  nodes.forEach(function (n) { var k = n.getAttribute("data-i18n"); if (!(k in en)) en[k] = n.innerHTML; });
+  T.en = en;
+  var langs = ["en", "de", "pl"];
+
+  function apply(lang) {
+    var d = T[lang] || en;
+    nodes.forEach(function (n) {
+      var k = n.getAttribute("data-i18n");
+      n.innerHTML = d[k] != null ? d[k] : en[k];
+    });
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-lang]").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-lang") === lang ? "true" : "false");
+    });
+    try { localStorage.setItem("hnd-lang", lang); } catch (e) {}
+  }
+
+  function pick() {
+    var h = (location.hash || "").slice(1);
+    if (langs.indexOf(h) >= 0) return h;
+    try { var s = localStorage.getItem("hnd-lang"); if (langs.indexOf(s) >= 0) return s; } catch (e) {}
+    var nav = (navigator.language || "en").slice(0, 2).toLowerCase();
+    return langs.indexOf(nav) >= 0 ? nav : "en";
+  }
+
+  document.querySelectorAll("[data-lang]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var l = b.getAttribute("data-lang");
+      if (location.hash !== "#" + l) location.hash = l; else apply(l);
+    });
+  });
+  window.addEventListener("hashchange", function () { apply(pick()); });
+
+  document.querySelectorAll("[data-go]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var t = document.getElementById(b.getAttribute("data-go"));
+      if (t) t.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+    });
+  });
+
+  apply(pick());
+})();
+</script>
